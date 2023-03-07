@@ -1,0 +1,35 @@
+li a {
+    color: green;
+}
+
+  .backdrop {
+    margin: auto;
+    width: 50%;
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+  select {
+    font-size: 16px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+
+
+/*.custom-bg {*/
+/*  background-color: powderblue; !* Replace with your desired shade of grey *!*/
+/*}*/
+
+/*.backdrop {*/
+/*    text-align: center;*/
+/*}*/
+
+
+/*body {*/
+/*    background-image: url("images/1.jpg");*/
+/*}*/

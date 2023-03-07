@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+{% load static %}
+
+
+<html  lang="en">
+
+
+<head>
+    <title>polls project</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+</head>
+
+
+<header>
+      <nav class="navbar navbar-expand-lg navbar-light custom-bg">
+      <a class="navbar-brand" href="#">Polls App</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'polls:IndexView' %}">Home</a>
+          </li>
+
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'polls:logout' %}">Logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'polls:login' %}">Login</a>
+                </li>
+            {% endif %}
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'polls:register' %}">Register</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+</header>
+
+{#style="background- image: url('{% static 'images/1.jpg' %}')#}
+{#<body style="background-image: url('../images/1.jpg')">#}
+{#<div class="backdrop" >#}
+<br><br><br>
+<body>
+ {% block cont %}
+  <div class="backdrop">
+   <h1>Welcome to the Polls App, {{ username }}!</h1><br><br>
+    <label for="question-select">Select a question:</label>
+    <select id="question-select">
+      <option value="" selected>Select question</option>
+      {% for question in latest_question_list %}
+      <option value="{{ question.id }}">{{ question.question_text }}</option>
+      {% endfor %}
+    </select>
+    <button id="done-button" disabled>Done</button>
+  </div>
+</body>
+{#</div>#}
+<script>
+  // Get the question select element and the done button element
+  const questionSelect = document.getElementById("question-select");
+  const doneButton = document.getElementById("done-button");
+
+  // Listen for changes in the select element
+  questionSelect.addEventListener("change", function() {
+    // Enable the done button if a question has been selected
+    doneButton.disabled = !questionSelect.value;
+  });
+
+  // Listen for clicks on the done button
+  doneButton.addEventListener("click", function() {
+    // Get the selected question ID
+    const selectedQuestionId = questionSelect.value;
+
+    // Redirect to the question detail page for the selected question
+    window.location.href = "{% url 'polls:detail' 0 %}".replace("0", selectedQuestionId);
+  });
+</script>
+
+
+
+  {% endblock cont %}
+</html>
+

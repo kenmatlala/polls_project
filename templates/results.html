@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+{% block cont %}
+    <div class="backdrop">
+    <h1>Results: </h1>
+
+     <ul>
+      <h1>{{ temp.question.question_text }}</h1>
+    {% for choice in temp.choice_set.all %}
+         <h1>{{ choice.question_text}}</h1>
+        <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+    {% endfor %}
+</ul>
+
+
+<ul>
+
+    {% for choice in temp.question.choice_set.all %}
+        <h1>{{ temp.question.question_text }}</h1>
+        <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+    {% endfor %}
+</ul>
+
+{#    <a href="{% url 'polls:DetailView' question_id %}"> Vote Again</a>#}
+{% endblock cont %}
+</div>
