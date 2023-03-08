@@ -7,6 +7,7 @@ from .views import QuestionDetailView
 
 app_name = 'polls'
 
+# A list of url patterns.
 urlpatterns = [
     path('', views.IndexView.as_view(), name='IndexView'),
     # ex: /polls/5/
@@ -16,6 +17,7 @@ urlpatterns = [
     # ex: /polls/5/vote/
     path('<int:question_id>/vote/', views.vote, name='vote'),
 
+     # A url pattern that is used to match the url with the view.
     path("login/", views.login_request, name="login"),
 
     path('register/', views.register_request, name="register"),

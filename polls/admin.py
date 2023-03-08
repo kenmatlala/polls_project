@@ -18,5 +18,6 @@ from .models import Question, Choice
 #     model = Choice
 #     extra = 3
 
+# Registering the Question and Choice models with the admin site.
 admin.site.register(Question)
 admin.site.register(Choice)
