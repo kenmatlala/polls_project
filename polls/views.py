@@ -12,11 +12,6 @@ from .models import Choice, Question
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-# The IndexView class inherits from the generic.ListView class, which is a generic view that displays
-# a list of objects. 
-# 
-# The IndexView class overrides the get_queryset() method to return the last five published questions
-# (not including those set to be published in the future)
 class IndexView(LoginRequiredMixin, generic.ListView):
     template_name = 'index.html'
     context_object_name = 'latest_question_list'
@@ -36,8 +31,6 @@ class IndexView(LoginRequiredMixin, generic.ListView):
         return context
 
 
-# The QuestionDetailView class is a generic view that displays a question text, with pub_date and
-# was_published_recently properties if the question is published
 class QuestionDetailView(generic.DetailView):
     model = Question
     template_name = 'detail.html'
@@ -50,13 +43,6 @@ class QuestionDetailView(generic.DetailView):
 
 
 @login_required(login_url='login')
-    """
-    A function that is called when a user votes on a question.
-    
-    :param request: The original HttpRequest object
-    :param question_id: The primary key of the question whose results we want to display
-    :return: The user is being redirected to the results page.
-    """
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
@@ -76,28 +62,12 @@ def vote(request, question_id):
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 
-    """
-    It takes a request and a poll_id, gets the Question object with the given poll_id, and passes it to
-    a template called results.html
-    
-    :param request: The request object is the first parameter to the view function. It contains
-    information about the current request
-    :param poll_id: The primary key of the poll we're interested in
-    :return: The question and the choices
-    """
 def result_views(request, poll_id):
     templates_name = 'results.html'
     temp = Question.objects.get(pk=poll_id)
     return render(request, templates_name, {'temp': temp})
 
 
-    """
-    If the request is a POST request, then validate the form and save the user. If the form is not
-    valid, then display an error message. If the request is not a POST request, then display the form
-    
-    :param request: The request object
-    :return: The render function is being returned.
-    """
 def register_request(request):
     if request.method == "POST":
         form = NewUserForm(request.POST)
@@ -121,14 +91,6 @@ def register_request(request):
 
 
 def login_request(request):
-    """
-    If the request is a POST request, then validate the form and log the user in. If the request is a
-    GET request, then just render the login page
-    
-    :param request: The request object is passed to the view by Django. It contains all the information
-    about the current request
-    :return: The login.html template is being returned.
-    """
     if request.method == "POST":
         form = LoginForm(request, data=request.POST)
         if form.is_valid():
@@ -144,11 +106,5 @@ def login_request(request):
 
 
 def logout_view(request):
-    """
-    It logs out the user and redirects to the IndexView
-    
-    :param request: The full HTTP request object for this page load
-    :return: The logout_view function is returning a redirect to the IndexView.
-    """
     logout(request)
     return redirect('polls:IndexView')
